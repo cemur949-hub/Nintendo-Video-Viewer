@@ -1,0 +1,9 @@
+// ShieldConfiguration.xcconfig: ShieldConfiguration extension (custom block screen).
+
+PRODUCT_NAME = $(TARGET_NAME)
+PRODUCT_BUNDLE_IDENTIFIER = $(SHIELD_BUNDLE_ID)
+INFOPLIST_FILE = Extensions/ShieldConfiguration/Info.plist
+CODE_SIGN_ENTITLEMENTS = Extensions/ShieldConfiguration/ShieldConfiguration.entitlements
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @executable_path/../../Frameworks
+APPLICATION_EXTENSION_API_ONLY = YES
+SKIP_INSTALL = YES

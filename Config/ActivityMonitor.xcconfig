@@ -1,0 +1,9 @@
+// ActivityMonitor.xcconfig: DeviceActivityMonitor extension (scheduled locks).
+
+PRODUCT_NAME = $(TARGET_NAME)
+PRODUCT_BUNDLE_IDENTIFIER = $(MONITOR_BUNDLE_ID)
+INFOPLIST_FILE = Extensions/ActivityMonitor/Info.plist
+CODE_SIGN_ENTITLEMENTS = Extensions/ActivityMonitor/ActivityMonitor.entitlements
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @executable_path/../../Frameworks
+APPLICATION_EXTENSION_API_ONLY = YES
+SKIP_INSTALL = YES

@@ -1,0 +1,38 @@
+// Identity.xcconfig
+//
+// THE ONE PLACE TO CHANGE THE APP'S IDENTITY.
+//
+// Every bundle ID, the App Group and the display name derive from the values
+// below. Nothing in Swift, Info.plist or the entitlements hard-codes them, so
+// SideStore can re-sign under your Apple ID without conflicts.
+//
+// If SideStore reports that an App ID is taken or already exists, change
+// BUNDLE_ID_PREFIX to something unique to you (e.g. com.yourname) and rebuild.
+// You can also override it per build without editing this file:
+//
+//     ./scripts/build-ipa.sh --bundle-prefix com.yourname
+//
+// Notes:
+// - Extension IDs must start with the app's ID (iOS requires it), so
+//   derive them from APP_BUNDLE_ID rather than typing them out.
+// - SideStore usually appends your Team ID when it signs, e.g.
+//   com.cemur949.nvviewer -> com.cemur949.nvviewer.ABCDE12345 and
+//   group.com.cemur949.nvviewer -> group.com.cemur949.nvviewer.ABCDE12345.
+//   The app finds the real values at runtime (see Shared/AppGroup.swift).
+// - Each distinct bundle ID uses up a free-account App ID (10 per 7 days),
+//   so don't change the prefix more often than you need to.
+
+APP_DISPLAY_NAME = NV Viewer
+
+BUNDLE_ID_PREFIX = com.cemur949
+APP_BUNDLE_ID = $(BUNDLE_ID_PREFIX).nvviewer
+MONITOR_BUNDLE_ID = $(APP_BUNDLE_ID).activitymonitor
+SHIELD_BUNDLE_ID = $(APP_BUNDLE_ID).shieldconfig
+APP_GROUP_ID = group.$(APP_BUNDLE_ID)
+
+MARKETING_VERSION = 1.0.0
+CURRENT_PROJECT_VERSION = 1
+
+// Only needed when you run from Xcode with your own team (paid accounts).
+// Leave empty for the SideStore .ipa build; SideStore does its own signing.
+DEVELOPMENT_TEAM =
