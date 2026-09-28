@@ -1,5 +1,6 @@
 import CoreNFC
 import FamilyControls
+import os
 import UserNotifications
 
 /// Builds a `CapabilityReport` without calling any API that needs a missing entitlement.

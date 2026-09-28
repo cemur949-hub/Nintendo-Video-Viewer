@@ -1,4 +1,5 @@
 import Foundation
+import os
 
 /// Finds the App Group identifier at runtime.
 ///

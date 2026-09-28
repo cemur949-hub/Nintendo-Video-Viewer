@@ -1,6 +1,7 @@
 import DeviceActivity
 import FamilyControls
 import ManagedSettings
+import os
 
 // Screen Time code shared by the app and the DeviceActivityMonitor extension.
 // Every call here needs the Family Controls entitlement. The app checks for it

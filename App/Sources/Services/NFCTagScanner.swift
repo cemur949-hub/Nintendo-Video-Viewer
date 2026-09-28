@@ -1,4 +1,5 @@
 import CoreNFC
+import Foundation
 
 /// Reads the hardware identifier (UID) of one NFC tag.
 ///

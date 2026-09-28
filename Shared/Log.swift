@@ -1,3 +1,4 @@
+import Foundation
 import os
 
 /// Unified logging, filterable in Console.app by subsystem = the running bundle ID.
