@@ -26,8 +26,9 @@ Store**, and to keep working when it's signed with a **free Apple ID**:
 ./scripts/build-ipa.sh          # → build/NintendoVideoViewer-1.0.0.ipa  (macOS + Xcode 15+)
 ```
 
-No Mac? Run the **Build unsigned IPA** workflow on the Actions tab and download
-the artifact.
+No Mac? Download the `.ipa` from the repo's **Releases** page. CI attaches it
+there on every push to the default branch, or when you run the **Build unsigned
+IPA** workflow by hand.
 
 Then in SideStore: **My Apps → + →** pick the `.ipa`. Refresh at least every 7
 days. The app reminds you a day ahead.

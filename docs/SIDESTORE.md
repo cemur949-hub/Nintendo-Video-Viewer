@@ -6,7 +6,7 @@
   refreshing** (pairing file and VPN set up as in SideStore's own guide).
 - A way to build the `.ipa`, either of:
   - a **Mac with Xcode 15 or later**, or
-  - **GitHub Actions** (no Mac needed; see step 2B).
+  - **GitHub** (no Mac needed): download it from Releases, or have Actions build it (see step 2B).
 - Optional: an NFC tag (any NTAG213/215/216 sticker, key fob or card). Tags
   only work if the NFC entitlement survives signing, which it doesn't on a free
   Apple ID. See [ENTITLEMENTS.md](ENTITLEMENTS.md).
@@ -67,12 +67,17 @@ Options: `--configuration Debug`, `--bundle-prefix com.yourname`,
 `--output DIR`, `--help`. If you have several Xcodes, pick one with
 `DEVELOPER_DIR=/Applications/Xcode_16.app/Contents/Developer ./scripts/build-ipa.sh`.
 
-## 2B. Or build it with GitHub Actions (no Mac)
+## 2B. Or get it from GitHub (no Mac)
 
-1. On GitHub, open the repo's **Actions** tab and choose **Build unsigned IPA**.
-2. Click **Run workflow** (it also runs on every push).
-3. When it finishes, download **unsigned-ipa** from the run's **Artifacts**.
-   It's a `.zip` with the `.ipa` inside.
+The **Build unsigned IPA** workflow builds the `.ipa` on a GitHub-hosted Mac on
+every push. On pushes to the default branch, and when you run it by hand, it
+also attaches the `.ipa` to the release for the current version (`v1.0.0`).
+
+- **Easiest:** open the repo's **Releases** page and download
+  `NintendoVideoViewer-<version>.ipa`.
+- **Fresh build:** on the **Actions** tab, choose **Build unsigned IPA → Run
+  workflow**. When it finishes, the release has the new file. Every run also
+  keeps a copy under the run's **Artifacts** (a `.zip` with the `.ipa` inside).
 
 ## 3. Get the .ipa onto your iPhone
 
@@ -80,8 +85,8 @@ Any of these:
 
 - **AirDrop** it from your Mac. It lands in Files → Downloads.
 - Put it in **iCloud Drive** and open the Files app.
-- Download the Actions artifact in Safari on the iPhone, then tap the `.zip`
-  in Files to unzip it.
+- Open the **Releases** page in Safari on the iPhone and tap the `.ipa`. It
+  downloads straight to Files → Downloads.
 
 ## 4. Install with SideStore
 

@@ -1,5 +1,7 @@
 # Builds the unsigned SideStore .ipa on a GitHub-hosted Mac, so you don't need
-# your own. Download it from the run's "Artifacts" section.
+# your own. Every run keeps it under the run's "Artifacts". Manual runs and
+# pushes to the default branch also attach it to the GitHub Release for the
+# current version (v<MARKETING_VERSION>), replacing the file if that release exists.
 #
 # macOS runner minutes are limited on private repositories. To build only on
 # demand, delete the `push:` trigger and use "Run workflow" on the Actions tab.
@@ -22,6 +24,8 @@ jobs:
     needs: check
     runs-on: macos-15
     timeout-minutes: 30
+    permissions:
+      contents: write # create the release and upload the .ipa
     steps:
       - uses: actions/checkout@v4
       - name: Xcode version
@@ -33,3 +37,29 @@ jobs:
           name: unsigned-ipa
           path: build/ipa/*.ipa
           if-no-files-found: error
+      - name: Attach .ipa to GitHub Release
+        if: github.event_name == 'workflow_dispatch' || github.ref_name == github.event.repository.default_branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          ipa="$(ls build/ipa/*.ipa)"
+          name="$(basename "$ipa")"
+          version="${name#NintendoVideoViewer-}"
+          version="${version%.ipa}"
+          tag="v$version"
+          notes="Unsigned .ipa for SideStore, built from ${GITHUB_SHA:0:7}.
+
+          Install: download ${name} below, then open SideStore > My Apps > + and pick the file. Refresh in SideStore at least every 7 days.
+
+          On a free Apple ID, SideStore signs without Family Controls and NFC Tag Reading. The app still runs and explains this under Needs attention.
+
+          Full steps: https://github.com/${GITHUB_REPOSITORY}/blob/${GITHUB_SHA}/docs/SIDESTORE.md"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" "$ipa" --clobber --repo "$GITHUB_REPOSITORY"
+            gh release edit "$tag" --notes "$notes" --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create "$tag" "$ipa" --target "$GITHUB_SHA" --title "NintendoVideoViewer $version" \
+              --notes "$notes" --repo "$GITHUB_REPOSITORY"
+          fi
+          echo "Attached $name to https://github.com/${GITHUB_REPOSITORY}/releases/tag/$tag"
